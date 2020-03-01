@@ -1,6 +1,5 @@
 package com.himoyi.img_api.utils;
 
-
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 
@@ -8,11 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * 数据库操作加强类
- * 将connection改为手动获取
- */
-class TxQueryRunner extends QueryRunner {
+public class TxQuaryRunner extends QueryRunner {
     @Override
     public int[] batch(String sql, Object[][] params) throws SQLException {
         Connection con = JDBCUtils.getConnection();
@@ -101,4 +96,3 @@ class TxQueryRunner extends QueryRunner {
         return list;
     }
 }
-
