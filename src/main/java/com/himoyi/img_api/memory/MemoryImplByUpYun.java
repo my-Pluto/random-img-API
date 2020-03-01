@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class memoryImplByUpYun implements memory {
+public class MemoryImplByUpYun implements Memory {
 
     /**
      * 获取文件目录信息
