@@ -5,6 +5,15 @@ public class Img {
     private String name;
     private String md5;
 
+    public Img() {
+    }
+
+    public Img(String path, String name, String md5) {
+        this.path = path;
+        this.name = name;
+        this.md5 = md5;
+    }
+
     public String getPath() {
         return path;
     }

@@ -20,15 +20,15 @@ public class ImgDao {
         String sql = "select count(*) from img";
         try {
             //获取数据总条数
-            Integer count = txQuaryRunner.query(sql, new ScalarHandler<Integer>());
+            Long count = txQuaryRunner.query(sql, new ScalarHandler<Long>());
             if (count == 0) {
                 throw new RuntimeException("不存在图片，请检查各项信息是否正确！");
             }
             //生成随机数
-            int limit = new Random().nextInt(count);
+            long limit = new Random().nextInt(Integer.parseInt(count.toString()));
 
             //获取信息
-            sql = "SELECT * FROM img LIMIT " + count + ", 1";
+            sql = "SELECT * FROM img LIMIT " + limit + ", 1";
             Img img = txQuaryRunner.query(sql, new BeanHandler<Img>(Img.class));
 
             return img;
@@ -49,12 +49,12 @@ public class ImgDao {
 
         try {
             //获取指定类型的数据总条数
-            Integer count = txQuaryRunner.query(sql, new ScalarHandler<Integer>());
+            Long count = txQuaryRunner.query(sql, new ScalarHandler<Long>());
             if (count == 0)
                 throw new RuntimeException("不存在该类型图片");
 
             //生成随机数
-            int limit = new Random().nextInt(count);
+            int limit = new Random().nextInt(Integer.parseInt(count.toString()));
 
             //获取信息
             sql = "SELECT * FROM img WHERE path LIKE '" + type + "' LIMIT " + limit + ",1";
@@ -62,6 +62,66 @@ public class ImgDao {
 
             return img;
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 确认是否存在指定记录
+     * @param md5
+     * @return
+     */
+    public boolean check(String md5) {
+        TxQuaryRunner txQuaryRunner = new TxQuaryRunner();
+
+        String sql = "SELECT * FROM img WHERE md5='" + md5 + "'";
+
+        Img img = null;
+        try {
+            img = txQuaryRunner.query(sql, new BeanHandler<>(Img.class));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (img != null)
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * 通过md5查找指定记录
+     * @param md5
+     * @return
+     */
+    public Img select(String md5) {
+        TxQuaryRunner txQuaryRunner = new TxQuaryRunner();
+
+        String sql = "SELECT * FROM img WHERE md5 = '" + md5 + "'";
+
+        Img img = null;
+        try {
+            img = txQuaryRunner.query(sql, new BeanHandler<>(Img.class));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return img;
+    }
+
+    /**
+     * 插入数据库信息
+     * @param img
+     */
+    public void update(Img img) {
+        TxQuaryRunner txQuaryRunner = new TxQuaryRunner();
+
+        String sql = "INSERT INTO img VALUES (?, ?, ?)";
+        Object[] params = {img.getPath(), img.getName(), img.getMd5()};
+
+        try {
+            txQuaryRunner.update(sql, params);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

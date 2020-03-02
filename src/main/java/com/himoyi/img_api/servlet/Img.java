@@ -32,7 +32,7 @@ public class Img extends HttpServlet {
             }
             else {
                 //更新数据库
-                img_service.update();
+                img_service.update(params);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -26,9 +26,9 @@ public class MemoryImplByUpYun implements Memory {
         String dirPath = "/";
 
         //参数列表，此时不需要
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         //结果信息
-        List<String> list = new LinkedList<>();
+        List<String> result = new LinkedList<>();
 
         try {
             //获取目录信息
@@ -36,16 +36,21 @@ public class MemoryImplByUpYun implements Memory {
             String string = response.body().string();
             List<String> path = UpYunResponseUtils.toList(string);
 
+            System.out.println(path);
             //获取各个目录下文件信息，并保存入list
             for (String s : path) {
                 dirPath = "/" + s;
                 string = manager.readDirIter(dirPath, null).body().string();
-                list = UpYunResponseUtils.getPath(s, UpYunResponseUtils.toList(string));
+                List<String> list = UpYunResponseUtils.getPath(s, UpYunResponseUtils.toList(string));
+                for (String s1 : list) {
+                    result.add(s1);
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException("获取目录文件信息失败");
         }
-        return list;
+        System.out.println(result);
+        return result;
     }
 
     /**

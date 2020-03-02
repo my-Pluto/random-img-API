@@ -8,8 +8,8 @@ public class PropertiesUtils {
     static {
         InputStream in = null;
         try {
-            in = new BufferedInputStream(new FileInputStream("src/main/resources/main.properties"));
-        } catch (FileNotFoundException e) {
+            in = PropertiesUtils.class.getResourceAsStream("/main.properties");
+        } catch (Exception e) {
             throw new RuntimeException("主配置文件不存在！");
         }
         try {
@@ -24,6 +24,16 @@ public class PropertiesUtils {
     private static String user = p.getProperty("User");
     private static String password = p.getProperty("Password");
     private static String Address = p.getProperty("Address");
+    private static String Username = p.getProperty("Username");
+    private static String Userpassword = p.getProperty("Userpassword");
+
+    public static String getUsername() {
+        return Username;
+    }
+
+    public static String getUserpassword() {
+        return Userpassword;
+    }
 
     public static String getAddress() {
         return Address;

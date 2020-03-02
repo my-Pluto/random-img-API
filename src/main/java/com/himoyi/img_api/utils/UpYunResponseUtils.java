@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class UpYunResponseUtils {
     public static List<String> toList(String response) {
-        List<String> list = new LinkedList<String>();
+        List<String> list = new LinkedList<>();
 
         String[] strings = response.split("\n");
         for (String string : strings) {

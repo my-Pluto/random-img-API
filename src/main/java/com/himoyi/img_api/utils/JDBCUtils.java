@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class JDBCUtils {
     //加载hikaricp的配置信息
-    private static HikariConfig hikariConfig = new HikariConfig("D:\\SoftwareData\\IDEA\\img_api\\src\\main\\resources\\hikari.properties");
+    private static HikariConfig hikariConfig = new HikariConfig("/hikari.properties");
     //获取数据库连接池
     private static HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
     //多线程支持
